@@ -1,9 +1,6 @@
 # 指定运行端口
 server:
   port: 8001
-
-
-
 # 指定主机地址
 eureka:
   instance:
