@@ -107,6 +107,26 @@ public class RibbonConfig {
 ```
 
 #### Hystrix
+     Hystrix具备服务降级、服务熔断、线程和信号隔离、请求缓存、请求合并以及服务监控等强大功能
+`@HystrixCommand` 来开启服务降级
+
+`@CacheResult` 开启缓存
+
+`@CacheKey`指定缓存的key，可以指定参数或指定参数中的属性值为缓存key，cacheKeyMethod还可以通过返回String类型的方法指定
+
+`@CacheRemove`移除缓存，需要指定commandKey。
+
+- 式例
+```java
+//    开启缓存、指定缓存Key
+    @CacheResult(cacheKeyMethod = "getCacheKey")
+//    开启服务降级
+    @HystrixCommand(fallbackMethod = "fallbackMethod1", commandKey = "getUserCache")
+    public Result getUserCache(Long id) {
+        LOGGER.info("getUserCache id:{}", id);
+        return restTemplate.getForObject(userServiceUrl + "/user/{1}", Result.class, id);
+    }
+```
 
 
 #### Fegin
@@ -120,3 +140,69 @@ public class RibbonConfig {
         </dependency>
 ```
 使用`@EnableFeignClients`启用Feign的客户端功能
+
+#### Zuul网关
+    Spring Cloud Zuul通过与Spring Cloud Eureka进行整合，
+    将自身注册为Eureka服务治理下的应用，同时从Eureka中获得了所有其他微服务的实例信息
+
+使用`@EnableZuulProxy`来启动
+
+```xml
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-zuul</artifactId>
+        </dependency>
+<!--健康检查 、 监控-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+```
+```yml
+server:
+  port: 8801
+
+spring:
+  application:
+    name: zuul-proxy
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8001/eureka/
+
+zuul:
+  routes:
+    # 给服务配置路由
+    user-service:
+      path: /userService/**
+    feign-service:
+      path: /feignService/**
+# 给路由地址添加前缀
+  prefix: /proxy
+  #配置过滤敏感的请求头信息，设置为空就不会过滤
+  sensitive-headers: Cookie,Set-Cookie,Authorization
+  #设置为true重定向是会添加host请求头
+  add-host-header: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: 'routes'
+
+ribbon:
+  # 服务请求连接超时时间（毫秒）
+  ConnectTimeout: 1000
+  # 服务请求处理超时时间（毫秒）
+  ReadTimeout: 3000
+```
+**_可添加过滤器和认证！_**
+
+- Eureka：各个服务启动时，Eureka Client都会将服务注册到Eureka Server，并且Eureka Client还可以反过来从Eureka Server拉取注册表，从而知道其他服务在哪里
+- Ribbon：服务间发起请求的时候，基于Ribbon做负载均衡，从一个服务的多台机器中选择一台
+- Feign：基于Feign的动态代理机制，根据注解和选择的机器，拼接请求URL地址，发起请求
+- Hystrix：发起请求是通过Hystrix的线程池来走的，不同的服务走不同的线程池，实现了不同服务调用的隔离，避免了服务雪崩的问题
+- Zuul：如果前端、移动端要调用后端系统，统一从Zuul网关进入，由Zuul网关转发请求给对应的服务
