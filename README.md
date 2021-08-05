@@ -201,6 +201,10 @@ zuul:
   sensitive-headers: Cookie,Set-Cookie,Authorization
   #设置为true重定向是会添加host请求头
   add-host-header: true
+  
+# 通过SpringBoot Actuator来查看Zuul中的路由信息
+# http://localhost:8801/actuator/routes
+# http://localhost:8801/actuator/routes/details查看详细路由信息
 
 management:
   endpoints:
