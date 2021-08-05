@@ -12,6 +12,7 @@
         <module name="common" />
         <module name="zuul-proxy" />
         <module name="ribbon-service" />
+        <module name="admin-server" />
         <module name="user-service" />
         <module name="feign-service" />
         <module name="eureka-server" />

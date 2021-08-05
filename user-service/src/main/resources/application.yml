@@ -4,11 +4,33 @@ server:
 spring:
   application:
     name: user-service
-
+#    zipkin:
+#      base-url: http://localhost:9411
+#      #设置Sleuth的抽样收集概率
+#      sleuth:
+#        sampler:
+#          probability: 0.1
+  boot:
+    admin:
+      client:
+        # 配置admin-server地址
+        url: http://120.24.191.224:9301
 eureka:
   client:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://localhost:8001/eureka/
+      defaultZone: http://120.24.191.224:8001/eureka/
 
+# 添加开启admin的日志监控
+logging:
+  file: admin-client.log
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS

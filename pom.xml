@@ -23,6 +23,7 @@
         <module>feign-service</module>
         <module>zuul-proxy</module>
         <module>hystrix-service</module>
+        <module>admin-server</module>
     </modules>
 
 
@@ -80,6 +81,23 @@
                 <version>2.2.2.RELEASE</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-zipkin</artifactId>
+                <version>2.2.2.RELEASE</version>
+            </dependency>
+
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-starter-server</artifactId>
+                <version>2.2.2</version>
+            </dependency>
+
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-starter-client</artifactId>
+                <version>2.2.2</version>
+            </dependency>
 
 
         </dependencies>
