@@ -1,3 +1,18 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [核心组件](#%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6)
+  - [Eureka](#eureka)
+    - [Eureka-server (服务端)](#eureka-server-%E6%9C%8D%E5%8A%A1%E7%AB%AF)
+    - [Eureka 客户端](#eureka-%E5%AE%A2%E6%88%B7%E7%AB%AF)
+  - [Ribbon](#ribbon)
+  - [Hystrix](#hystrix)
+  - [Fegin](#fegin)
+  - [Zuul网关](#zuul%E7%BD%91%E5%85%B3)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 
 
 ## 核心组件
@@ -106,7 +121,7 @@ public class RibbonConfig {
     }
 ```
 
-#### Hystrix
+### Hystrix
      Hystrix具备服务降级、服务熔断、线程和信号隔离、请求缓存、请求合并以及服务监控等强大功能
 `@HystrixCommand` 来开启服务降级
 
@@ -129,7 +144,7 @@ public class RibbonConfig {
 ```
 
 
-#### Fegin
+### Fegin
     Feign具备可插拔的注解支持，同时支持Feign注解、JAX-RS注解及SpringMvc注解。
     当使用Feign时，Spring Cloud集成了Ribbon和Eureka以提供负载均衡的服务调用及基于Hystrix的服务容错保护功能。
 
@@ -141,7 +156,7 @@ public class RibbonConfig {
 ```
 使用`@EnableFeignClients`启用Feign的客户端功能
 
-#### Zuul网关
+### Zuul网关
     Spring Cloud Zuul通过与Spring Cloud Eureka进行整合，
     将自身注册为Eureka服务治理下的应用，同时从Eureka中获得了所有其他微服务的实例信息
 
