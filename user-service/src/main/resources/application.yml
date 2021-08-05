@@ -14,13 +14,13 @@ spring:
     admin:
       client:
         # 配置admin-server地址
-        url: http://120.24.191.224:9301
+        url: http://localhost:9301
 eureka:
   client:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://120.24.191.224:8001/eureka/
+      defaultZone: http://localhost:8001/eureka/
 
 # 添加开启admin的日志监控
 logging:
